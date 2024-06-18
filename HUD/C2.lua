@@ -39,22 +39,36 @@ function drawHUD()
     
     -- Ustalanie pozycji na ekranie
     local screenWidth, screenHeight = guiGetScreenSize()
-    local x, y = screenWidth - 220, 20
+    local logoSize = 50 -- wielkość logo (kwadrat)
+    local hpBarWidth = 150 -- szerokość paska zdrowia
+    local hpBarHeight = 25 -- wysokość paska zdrowia
+    local padding = 5 -- odstęp między elementami
+    local x = screenWidth - logoSize - hpBarWidth - 2 * padding
+    local y = 20
     
-    -- Rysowanie logo serwera
-    dxDrawImage(x, y, 200, 50, logo)
+    -- Rysowanie logo serwera (kwadrat)
+    dxDrawImage(x + hpBarWidth + padding, y, logoSize, logoSize, logo)
     
     -- Rysowanie paska zdrowia
-    dxDrawImage(x, y + 60, 200, 25, hpBarBg)
-    dxDrawImageSection(x, y + 60, 200 * healthPercentage, 25, 0, 0, 200 * healthPercentage, 25, hpBarFg)
+    dxDrawImage(x, y, hpBarWidth, hpBarHeight, hpBarBg)
+    dxDrawImageSection(x, y, hpBarWidth * healthPercentage, hpBarHeight, 0, 0, hpBarWidth * healthPercentage, hpBarHeight, hpBarFg)
+    
+    -- Ustalanie pozycji dla tekstów
+    local textX = x
+    local textY = y + logoSize + padding
     
     -- Rysowanie tekstów
-    dxDrawText("Nick: " .. nick, x, y + 90, x + 200, y + 110, tocolor(255, 255, 255, 255), 1.0, "default-bold")
-    dxDrawText("SID: " .. sid, x, y + 110, x + 200, y + 130, tocolor(255, 255, 255, 255), 1.0, "default-bold")
-    dxDrawText("Ping: " .. ping, x, y + 130, x + 200, y + 150, tocolor(255, 255, 255, 255), 1.0, "default-bold")
-    dxDrawText("SRP: " .. srp, x, y + 150, x + 200, y + 170, tocolor(255, 255, 255, 255), 1.0, "default-bold")
-    dxDrawText("Pieniądze: " .. formattedMoney, x, y + 170, x + 200, y + 190, tocolor(255, 255, 255, 255), 1.0, "default-bold")
-    dxDrawText("Broń: " .. getWeaponNameFromID(weapon) .. " (" .. clipAmmo .. "/" .. ammo .. ")", x, y + 190, x + 200, y + 210, tocolor(255, 255, 255, 255), 1.0, "default-bold")
+    dxDrawText("Nick: " .. nick, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
+    textY = textY + 20 + padding
+    dxDrawText("SID: " .. sid, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
+    textY = textY + 20 + padding
+    dxDrawText("Ping: " .. ping, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
+    textY = textY + 20 + padding
+    dxDrawText("SRP: " .. srp, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
+    textY = textY + 20 + padding
+    dxDrawText("Pieniądze: " .. formattedMoney, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
+    textY = textY + 20 + padding
+    dxDrawText("Broń: " .. getWeaponNameFromID(weapon) .. " (" .. clipAmmo .. "/" .. ammo .. ")", textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
 end
 
 -- Dodanie eventu, który rysuje HUD co klatkę
