@@ -1,0 +1,7 @@
+<resource>
+    <info author="Twoje Imię" version="1.0" />
+    <script src="advanced_hud.lua" type="client" />
+    <file src="logo.png" />
+    <file src="hp_bar_bg.png" />
+    <file src="hp_bar_fg.png" />
+</resource>
