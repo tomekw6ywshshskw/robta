@@ -55,20 +55,19 @@ function drawHUD()
     
     -- Ustalanie pozycji dla tekstów
     local textX = x
-    local textY = y + logoSize + padding
+    local textY = y + hpBarHeight + padding
     
     -- Rysowanie tekstów
     dxDrawText("Nick: " .. nick, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
     textY = textY + 20 + padding
-    dxDrawText("SID: " .. sid, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
-    textY = textY + 20 + padding
-    dxDrawText("Ping: " .. ping, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
-    textY = textY + 20 + padding
-    dxDrawText("SRP: " .. srp, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
+    dxDrawText("SID: " .. sid, textX, textY, textX + (hpBarWidth + logoSize) / 2, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
+    dxDrawText("SRP: " .. srp, textX + (hpBarWidth + logoSize) / 2, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
     textY = textY + 20 + padding
     dxDrawText("Pieniądze: " .. formattedMoney, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
     textY = textY + 20 + padding
     dxDrawText("Broń: " .. getWeaponNameFromID(weapon) .. " (" .. clipAmmo .. "/" .. ammo .. ")", textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
+    textY = textY + 20 + padding
+    dxDrawText("Ping: " .. ping, textX, textY, textX + hpBarWidth + logoSize, textY + 20, tocolor(255, 255, 255, 255), 1.0, "default-bold")
 end
 
 -- Dodanie eventu, który rysuje HUD co klatkę
