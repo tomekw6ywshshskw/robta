@@ -1,0 +1,7 @@
+<meta>
+    <info author="YourName" version="1.0" description="Vehicle Shop System" />
+    
+    <script src="db_connection.lua" type="server" />
+    <script src="server.lua" type="server" />
+    <script src="vehicle_shop.lua" type="client" />
+</meta>
