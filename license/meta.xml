@@ -1,0 +1,13 @@
+<resource>
+    <info name="DrivingSchool" version="1.0" author="YourName" />
+
+    <server>
+        <script src="server.lua" type="server" />
+    </server>
+    
+    <client>
+        <script src="category_selection.lua" type="client" />
+        <script src="test_theory.lua" type="client" />
+        <script src="practical_test.lua" type="client" />
+    </client>
+</resource>
