@@ -1,0 +1,25 @@
+<meta>
+    <info name="My Core" author="YourName" version="1.0" />
+    <script src="server/main.lua" type="server" />
+    <script src="server/punishment.lua" type="server" />
+    <script src="server/stats.lua" type="server" />
+    <script src="server/spawn.lua" type="server" />
+    <script src="server/commands.lua" type="server" />
+    <script src="server/chat.lua" type="server" />
+    <script src="server/db.lua" type="server" />
+    <script src="client/main.lua" type="client" />
+    <script src="client/spawn.lua" type="client" />
+    <script src="client/commands.lua" type="client" />
+    <script src="client/chat.lua" type="client" />
+    <export server="fetchPlayerData" />
+    <export server="savePlayerData" />
+    <export server="punishPlayer" />
+    <export server="logPunishment" />
+    <export server="handleBanCommand" />
+    <export server="handleKickCommand" />
+    <export server="handleWarnCommand" />
+    <export server="handleSetReputationCommand" />
+    <export server="handleSetSIDCommand" />
+    <export server="handleSetSerialCommand" />
+    <export server="handleSetLicenseCommand" />
+</meta>
