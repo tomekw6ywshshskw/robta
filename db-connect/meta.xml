@@ -1,0 +1,9 @@
+<resource>
+    <info name="DB Connector" author="YourName" version="1.0" />
+    <script src="db.lua" type="server" />
+    <export server="queryDatabase" />
+    <export server="executeDatabase" />
+    <export server="fetchPlayerData" />
+    <export server="savePlayerData" />
+    <export server="logPunishment" />
+</resource>
