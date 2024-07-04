@@ -2,4 +2,8 @@
     <info author="YourName" version="1.0" type="script" />
     <script src="server.lua" type="server" />
     <script src="client.lua" type="client" />
+    <script src="vehicles.lua" type="shared" />
+    <script src="jobs.lua" type="shared" />
+    <script src="job_requirements.lua" type="shared" />
+    <script src="multiplier.lua" type="shared" />
 </meta>
