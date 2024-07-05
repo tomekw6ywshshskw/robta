@@ -5,6 +5,7 @@ addEventHandler("onResourceStart", resourceRoot, function()
     dofile("jobs.lua")
     dofile("job_requirements.lua")
     dofile("multiplier.lua")
+    dofile("warehouse_job.lua")
 end)
 
 local adminSerials = {
@@ -70,4 +71,29 @@ end)
 addCommandHandler("mnoznik", function(player, cmd, multiplier, duration, jobCode)
     if not isAdmin(player) then return end
     setMultiplier(player, tonumber(multiplier), tonumber(duration), jobCode)
+end)
+
+-- Warehouse job handlers
+function startWarehouseJob(player)
+    -- Logic to start warehouse job
+    setElementData(player, "onJob", true)
+    triggerClientEvent(player, "onWarehouseJobStart", resourceRoot)
+end
+
+function endWarehouseJob(player)
+    -- Logic to end warehouse job
+    setElementData(player, "onJob", false)
+    triggerClientEvent(player, "onWarehouseJobEnd", resourceRoot)
+end
+
+addEvent("startWarehouseJob", true)
+addEventHandler("startWarehouseJob", resourceRoot, function()
+    local player = client
+    startWarehouseJob(player)
+end)
+
+addEvent("endWarehouseJob", true)
+addEventHandler("endWarehouseJob", resourceRoot, function()
+    local player = client
+    endWarehouseJob(player)
 end)
