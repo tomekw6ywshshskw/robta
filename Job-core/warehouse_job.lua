@@ -18,4 +18,20 @@ function onMarkerHit(hitElement, matchingDimension)
         if source == warehouseMarkers.start then
             local isOnJob = getElementData(hitElement, "onJob") or false
             triggerClientEvent(hitElement, "updateJobUI", resourceRoot, isOnJob)
-        elseif getElementData(source,
+        elseif getElementData(source, "pickupMarker") then
+            -- Logic for picking up a package
+        elseif getElementData(source, "dropoffMarker") then
+            -- Logic for dropping off a package
+        end
+    end
+end
+
+for _, marker in ipairs(warehouseMarkers.pickup) do
+    setElementData(marker, "pickupMarker", true)
+    addEventHandler("onMarkerHit", marker, onMarkerHit)
+end
+
+for _, marker in ipairs(warehouseMarkers.dropoff) do
+    setElementData(marker, "dropoffMarker", true)
+    addEventHandler("onMarkerHit", marker, onMarkerHit)
+end
