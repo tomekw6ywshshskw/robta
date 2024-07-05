@@ -6,4 +6,8 @@
     <script src="jobs.lua" type="shared" />
     <script src="job_requirements.lua" type="shared" />
     <script src="multiplier.lua" type="shared" />
+    <script src="warehouse_job.lua" type="shared" />
+    <file src="ui/index.html" />
+    <file src="ui/style.css" />
+    <file src="ui/script.js" />
 </meta>
