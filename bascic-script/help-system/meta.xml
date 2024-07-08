@@ -1,0 +1,9 @@
+<resource>
+    <name>System Wsparcia</name>
+    <description>System zgłoszeń graczy dla serwera MTA</description>
+    <version>1.0</version>
+    <type>script</type>
+
+    <script src="support_client.lua" type="client" />
+    <script src="support_server.lua" type="server" />
+</resource>
