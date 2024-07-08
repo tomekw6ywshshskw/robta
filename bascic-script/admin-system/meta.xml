@@ -1,0 +1,9 @@
+<resource>
+    <name>Admin System</name>
+    <description>System administracyjny dla serwera MTA</description>
+    <version>1.0</version>
+    <type>script</type>
+
+    <script src="server.lua" type="server" />
+    <script src="db.lua" type="server" />
+</resource>
