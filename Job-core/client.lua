@@ -1,13 +1,14 @@
 -- client.lua
 local browser = nil
 
-function createJobUI()
+function createJobUI(isOnJob)
     if not browser then
         browser = createBrowser(800, 600, true, true)
         addEventHandler("onClientBrowserCreated", browser, function()
             loadBrowserURL(browser, "http://mta/local/ui/index.html")
             showCursor(true)
             guiSetInputEnabled(true)
+            triggerBrowserEvent(browser, "updateJobUI", isOnJob)
         end)
     end
 end
@@ -21,21 +22,18 @@ function removeJobUI()
     end
 end
 
-addEventHandler("onClientMarkerHit", resourceRoot, function(marker)
-    if getElementData(marker, "warehouseMarker") == true then
-        if not getElementData(localPlayer, "onJob") then
-            createJobUI()
-            executeBrowserJavascript(browser, "document.getElementById('start-job').style.display = 'block';")
-            executeBrowserJavascript(browser, "document.getElementById('end-job').style.display = 'none';")
-        else
-            createJobUI()
-            executeBrowserJavascript(browser, "document.getElementById('start-job').style.display = 'none';")
-            executeBrowserJavascript(browser, "document.getElementById('end-job').style.display = 'block';")
-        end
+addEventHandler("onClientMarkerHit", root, function(marker)
+    if getElementData(marker, "warehouseMarker") then
+        local isOnJob = getElementData(localPlayer, "onJob") or false
+        createJobUI(isOnJob)
     end
 end)
 
--- Event from CEF to client
+addEvent("closeWarehouseJobUI", true)
+addEventHandler("closeWarehouseJobUI", root, function()
+    removeJobUI()
+end)
+
 addEvent("startWarehouseJob", true)
 addEventHandler("startWarehouseJob", root, function()
     triggerServerEvent("startWarehouseJob", resourceRoot)
@@ -46,17 +44,14 @@ addEventHandler("endWarehouseJob", root, function()
     triggerServerEvent("endWarehouseJob", resourceRoot)
 end)
 
-addEvent("closeWarehouseJobUI", true)
-addEventHandler("closeWarehouseJobUI", root, function()
-    removeJobUI()
-end)
-
 addEvent("onWarehouseJobStart", true)
 addEventHandler("onWarehouseJobStart", resourceRoot, function()
+    setElementData(localPlayer, "onJob", true)
     removeJobUI()
 end)
 
 addEvent("onWarehouseJobEnd", true)
 addEventHandler("onWarehouseJobEnd", resourceRoot, function()
+    setElementData(localPlayer, "onJob", false)
     removeJobUI()
 end)
