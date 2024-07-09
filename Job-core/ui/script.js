@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const startJobButton = document.getElementById("start-job");
     const endJobButton = document.getElementById("end-job");
     const closeUIButton = document.getElementById("close-ui");
-    const jobStatus = document.getElementById("job-status");
 
     startJobButton.addEventListener("click", function () {
         mp.trigger("startWarehouseJob");
@@ -16,10 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
         mp.trigger("closeWarehouseJobUI");
     });
 
-    function updateJobStatus(status) {
-        jobStatus.textContent = status;
-    }
-
-    // Listen for updates from the server
-    mp.events.add("updateJobStatus", updateJobStatus);
+    mp.events.add("updateJobUI", function (isOnJob) {
+        if (isOnJob) {
+            startJobButton.style.display = "none";
+            endJobButton.style.display = "block";
+        } else {
+            startJobButton.style.display = "block";
+            endJobButton.style.display = "none";
+        }
+    });
 });
