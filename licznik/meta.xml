@@ -1,5 +1,5 @@
 <meta>
-    <info author="Twoje Imię" version="1.0" />
+    <info name="Digital Speedometer" author="YourName" version="1.0" />
     <script src="client.lua" type="client" />
-    <script src="server.lua" type="server" />
+    <file src="images/background.png" />
 </meta>
