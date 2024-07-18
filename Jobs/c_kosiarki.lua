@@ -1,112 +1,58 @@
-local lawnMarkers = {
-    { x = 1000, y = 2000, z = 20 },
-    { x = 1050, y = 2050, z = 20 },
-    -- dodaj więcej markerów trawnika
-}
+local gui = nil
 
-local currentLawn = nil
-local lawnProgress = 0
-local maxProgress = 100
-local isMowing = false
-local pickupVehicle = nil
-local mowerLoaded = false
-
-function startMowingJob()
-    if not hasMower() then
-        outputChatBox("Musisz posiadać kosiarkę, aby rozpocząć pracę!")
-        return
+function showWorkGUI()
+    if gui then
+        destroyElement(gui)
     end
     
-    if currentLawn then
-        local x, y, z = lawnMarkers[currentLawn].x, lawnMarkers[currentLawn].y, lawnMarkers[currentLawn].z
-        setElementPosition(localPlayer, x, y, z)
-        lawnProgress = 0
-        isMowing = true
-        addEventHandler("onClientRender", root, drawMowingUI)
-    end
-end
-
-function hasMower()
-    -- funkcja sprawdzająca, czy gracz posiada kosiarkę
-    return getElementData(localPlayer, "player:hasMower") == true
-end
-
-function loadMowerOnPickup()
-    local x, y, z = getElementPosition(localPlayer)
-    local pickupX, pickupY, pickupZ = x + 3, y, z -- przykładowa pozycja za pickupem
-
-    if pickupVehicle then
-        if not mowerLoaded then
-            -- sprawdź, czy gracz jest blisko pickupa
-            if getDistanceBetweenPoints3D(x, y, z, pickupX, pickupY, pickupZ) < 3 then
-                -- załaduj kosiarkę na pickup
-                mowerLoaded = true
-                outputChatBox("Kosiarka załadowana na pickup!")
-            else
-                outputChatBox("Musisz być blisko pickupa, aby załadować kosiarkę!")
-            end
-        else
-            outputChatBox("Kosiarka już jest załadowana na pickupie!")
-        end
+    gui = guiCreateWindow(screenW * 0.3, screenH * 0.3, screenW * 0.4, screenH * 0.4, "Praca Kosiarkarza", false)
+    
+    -- Zakładki GUI
+    local tabPanel = guiCreateTabPanel(0, 0.1, 1, 0.9, true, gui)
+    
+    -- Zakładka Praca
+    local tabWork = guiCreateTab("Praca", tabPanel)
+    local label = guiCreateLabel(0.05, 0.1, 0.9, 0.2, "Wybierz opcję:", true, tabWork)
+    
+    local startButton
+    if isWorkInProgress() then
+        startButton = guiCreateButton(0.3, 0.4, 0.4, 0.2, "Zakończ pracę", true, tabWork)
     else
-        outputChatBox("Musisz mieć pickupa, aby załadować kosiarkę!")
+        startButton = guiCreateButton(0.3, 0.4, 0.4, 0.2, "Rozpocznij pracę", true, tabWork)
     end
+    addEventHandler("onClientGUIClick", startButton, handleStartButtonClick, false)
+    
+    -- Zakładka Ulepszenia
+    local tabUpgrades = guiCreateTab("Ulepszenia", tabPanel)
+    local upgradeList = guiCreateGridList(0.05, 0.1, 0.9, 0.7, true, tabUpgrades)
+    guiGridListAddColumn(upgradeList, "Nazwa", 0.5)
+    guiGridListAddColumn(upgradeList, "Koszt (punkty pracy)", 0.4)
+    
+    for upgradeCode, upgrade in pairs(upgrades) do
+        local row = guiGridListAddRow(upgradeList)
+        guiGridListSetItemText(upgradeList, row, 1, upgrade.name, false, false)
+        guiGridListSetItemText(upgradeList, row, 2, tostring(upgrade.jobPointsCost), false, false)
+    end
+    
+    local buyButton = guiCreateButton(0.3, 0.85, 0.4, 0.1, "Kup Ulepszenie", true, tabUpgrades)
+    addEventHandler("onClientGUIClick", buyButton, handleBuyUpgradeClick, false)
+    
+    -- Zakładka Statystyki
+    local tabStats = guiCreateTab("Statystyki", tabPanel)
+    local jobPointsLabel = guiCreateLabel(0.05, 0.1, 0.9, 0.2, "Punkty Pracy: " .. jobPoints["player:jobPoints"], true, tabStats)
+    
+    local closeButton = guiCreateButton(0.3, 0.85, 0.4, 0.1, "Zamknij", true, gui)
+    addEventHandler("onClientGUIClick", closeButton, destroyWorkGUI, false)
+    
+    guiSetVisible(gui, true)
 end
 
-function unloadMowerOnLawn()
-    local x, y, z = getElementPosition(localPlayer)
-    local lawnX, lawnY, lawnZ = x + 5, y, z -- przykładowa pozycja trawnika
-    
-    if pickupVehicle then
-        if mowerLoaded then
-            -- sprawdź, czy gracz jest blisko trawnika
-            if getDistanceBetweenPoints3D(x, y, z, lawnX, lawnY, lawnZ) < 5 then
-                -- rozładuj kosiarkę na trawniku
-                mowerLoaded = false
-                outputChatBox("Kosiarka rozładowana na trawniku!")
-            else
-                outputChatBox("Musisz być blisko trawnika, aby rozładować kosiarkę!")
-            end
-        else
-            outputChatBox("Nie masz załadowanej kosiarki na pickupie!")
-        end
+function handleBuyUpgradeClick()
+    local selectedRow = guiGridListGetSelectedItem(upgradeList)
+    if selectedRow and selectedRow ~= -1 then
+        local upgradeCode = guiGridListGetItemText(upgradeList, selectedRow, 1)
+        buyUpgrade(localPlayer, upgradeCode)
     else
-        outputChatBox("Musisz mieć pickupa, aby rozładować kosiarkę!")
+        outputChatBox("Wybierz ulepszenie do kupienia!", localPlayer, 255, 0, 0)
     end
 end
-
-function finishMowingJob()
-    isMowing = false
-    removeEventHandler("onClientRender", root, drawMowingUI)
-    triggerServerEvent("onMowingJobFinish", resourceRoot, lawnProgress)
-end
-
-function drawMowingUI()
-    dxDrawRectangle(screenW * 0.3, screenH * 0.85, screenW * 0.4, screenH * 0.1, tocolor(0, 0, 0, 200))
-    dxDrawText("Koszenie trawnika: " .. math.floor(lawnProgress) .. "%", screenW * 0.3, screenH * 0.85, screenW * 0.7, screenH * 0.9, tocolor(255, 255, 255, 255), 1, "default", "center", "center")
-    
-    if lawnProgress >= maxProgress then
-        finishMowingJob()
-    end
-end
-
-function onLawnMarkerHit(hitPlayer)
-    if hitPlayer == localPlayer then
-        startMowingJob()
-    end
-end
-addEventHandler("onClientMarkerHit", root, onLawnMarkerHit)
-
-function onPlayerVehicleEnter(vehicle)
-    if vehicle and getVehicleType(vehicle) == "Pickup" then
-        pickupVehicle = vehicle
-    end
-end
-addEventHandler("onClientPlayerVehicleEnter", localPlayer, onPlayerVehicleEnter)
-
-function onPlayerVehicleExit(vehicle)
-    if vehicle and vehicle == pickupVehicle then
-        pickupVehicle = nil
-    end
-end
-addEventHandler("onClientPlayerVehicleExit", localPlayer, onPlayerVehicleExit)
