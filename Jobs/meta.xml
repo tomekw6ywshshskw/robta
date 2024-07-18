@@ -1,0 +1,9 @@
+<meta>
+    <info name="Job Core" author="YourName" version="1.0" />
+    <script src="client.lua" type="client" />
+    <script src="server.lua" type="server" />
+    <script src="c_magazyn.lua" type="client" />
+    <script src="s_magazyn.lua" type="server" />
+    <script src="main.lua" type="shared" />
+    <script src="wymagania.lua" type="shared" />
+</meta>
