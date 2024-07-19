@@ -1,0 +1,9 @@
+<resource>
+    <info name="Vehicle Speedometer and Mini Map" author="Twoje Imię" version="1.0" />
+
+    <script src="client.lua" type="client" />
+    <script src="server.lua" type="server" />
+
+    <file src="images/background.png" />
+    <file src="images/map.png" />
+</resource>
