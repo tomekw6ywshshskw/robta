@@ -1,4 +1,3 @@
-
 local screenWidth, screenHeight = guiGetScreenSize()
 local scale = screenWidth / 1920
 local font = "default-bold"
@@ -20,9 +19,13 @@ function drawSpeedometer()
         dxDrawText(string.format("%d km/h", speed), screenWidth / 2, screenHeight - 115 * scale, screenWidth / 2, screenHeight - 115 * scale, color, 2 * scale, font, "center", "top")
 
         -- Poziom paliwa
-        local fuel = getElementData(vehicle, "vehicle:fuel")
-        dxDrawImage(screenWidth / 2 + 70 * scale, screenHeight - 90 * scale, 20 * scale, 20 * scale, "images/fuel_icon.png")
-        dxDrawText(string.format("Fuel: %.1f L", fuel), screenWidth / 2 + 100 * scale, screenHeight - 90 * scale, screenWidth / 2 + 100 * scale, screenHeight - 90 * scale, tocolor(255, 255, 255), 1 * scale, font, "left", "top")
+        local fuel = getElementData(vehicle, "vehicle:fuel") or 0
+        dxDrawImage(screenWidth / 2 + 70 * scale, screenHeight - 90 * scale, 30 * scale, 30 * scale, "images/fuel_icon.png")
+        dxDrawText(string.format("Fuel: %.1f L", fuel), screenWidth / 2 + 105 * scale, screenHeight - 85 * scale, screenWidth / 2 + 105 * scale, screenHeight - 85 * scale, tocolor(255, 255, 255), 1 * scale, font, "left", "top")
+
+        -- Przebieg pojazdu
+        local mileage = getElementData(vehicle, "vehicle:mileage") or 0
+        dxDrawText(string.format("Mileage: %d km", mileage), screenWidth / 2, screenHeight - 60 * scale, screenWidth / 2, screenHeight - 60 * scale, tocolor(255, 255, 255), 1 * scale, font, "center", "top")
 
         -- Mini mapa na dole
         drawMiniMap(screenWidth / 2 - 145 * scale, screenHeight - 55 * scale, 290 * scale, 40 * scale)
