@@ -1,18 +1,15 @@
 -- Funkcja ustawiająca dźwięk silnika na kliencie
 function onSetEngineSound(soundFile, category)
     if soundFile == "standard" then
-        -- Usunięcie dźwięku silnika
+        -- Usunięcie dźwięku silnika, jeśli jest ustawiony
         if isElement(engineSound) then
             destroyElement(engineSound)
         end
-        -- Ustawienie domyślnego dźwięku silnika
-        -- MTA:SA automatycznie zarządza standardowymi dźwiękami, więc nie trzeba ręcznie ich ustawiać
     else
         -- Ustawienie niestandardowego dźwięku silnika
         if isElement(engineSound) then
             destroyElement(engineSound)
         end
-        
         engineSound = playSound3D(soundFile, 0, 0, 0, true)
         attachElements(engineSound, localPlayer.vehicle)
     end
