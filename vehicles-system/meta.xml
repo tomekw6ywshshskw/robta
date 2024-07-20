@@ -1,0 +1,22 @@
+<meta>
+    <info>
+        <name>MyResource</name>
+        <description>Resource description</description>
+        <version>1.0</version>
+        <author>YourName</author>
+    </info>
+
+    <!-- Skrypty serwera -->
+    <script src="server.lua" type="server"/>
+
+    <!-- Skrypty klienta -->
+    <script src="client.lua" type="client"/>
+
+    <!-- Inne zasoby -->
+    <file src="sound/sport_engine_start.wav" />
+    <file src="sound/muscle_engine_start.wav" />
+    <file src="sound/offroad_engine_start.wav" />
+    <file src="sound/lowrider_engine_start.wav" />
+    <file src="sound/truck_engine_start.wav" />
+    <file src="sound/regular_engine_start.wav" />
+</meta>
