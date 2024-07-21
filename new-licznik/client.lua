@@ -1,7 +1,6 @@
 local screenWidth, screenHeight = guiGetScreenSize()
 local scale = screenWidth / 1920
 local font = "default-bold"
-local showMiniMap = false
 
 local backgroundImg = "images/background.png"
 local mapImg = "images/map.png"
