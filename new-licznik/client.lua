@@ -10,28 +10,28 @@ function drawSpeedometer()
     local vehicle = getPedOccupiedVehicle(localPlayer)
     if vehicle then
         -- Tło licznika
-        dxDrawImage(screenWidth / 2 - 300 * scale, screenHeight - 200 * scale, 600 * scale, 200 * scale, backgroundImg)
+        dxDrawImage(screenWidth / 2 - 300 * scale, screenHeight - 300 * scale, 600 * scale, 300 * scale, backgroundImg)
 
         -- Nazwa pojazdu na górze
         local vehicleName = getVehicleName(vehicle)
-        dxDrawText(vehicleName, screenWidth / 2, screenHeight - 195 * scale, screenWidth / 2, screenHeight - 195 * scale, tocolor(255, 255, 255), 1.5 * scale, font, "center", "top")
+        dxDrawText(vehicleName, screenWidth / 2, screenHeight - 295 * scale, screenWidth / 2, screenHeight - 295 * scale, tocolor(255, 255, 255), 1.5 * scale, font, "center", "top")
 
         -- Cyfrowy prędkościomierz
         local speed = getSpeed(vehicle)
         local color = getSpeedColor(speed)
-        dxDrawText(string.format("%d km/h", speed), screenWidth / 2, screenHeight - 120 * scale, screenWidth / 2, screenHeight - 120 * scale, color, 2 * scale, font, "center", "top")
+        dxDrawText(string.format("%d km/h", speed), screenWidth / 2, screenHeight - 220 * scale, screenWidth / 2, screenHeight - 220 * scale, color, 2 * scale, font, "center", "top")
 
         -- Poziom paliwa
         local fuel = getElementData(vehicle, "vehicle:fuel") or 0
-        dxDrawImage(screenWidth / 2 - 290 * scale, screenHeight - 100 * scale, 30 * scale, 30 * scale, "images/fuel_icon.png")
-        dxDrawText(string.format("Fuel: %.1f L", fuel), screenWidth / 2 - 255 * scale, screenHeight - 95 * scale, screenWidth / 2 - 255 * scale, screenHeight - 95 * scale, tocolor(255, 255, 255), 1 * scale, font, "left", "top")
+        dxDrawImage(screenWidth / 2 - 290 * scale, screenHeight - 190 * scale, 30 * scale, 30 * scale, "images/fuel_icon.png")
+        dxDrawText(string.format("Fuel: %.1f L", fuel), screenWidth / 2 - 255 * scale, screenHeight - 185 * scale, screenWidth / 2 - 255 * scale, screenHeight - 185 * scale, tocolor(255, 255, 255), 1 * scale, font, "left", "top")
 
         -- Przebieg pojazdu
         local mileage = getElementData(vehicle, "vehicle:mileage") or 0
-        dxDrawText(string.format("Mileage: %d km", mileage), screenWidth / 2 + 150 * scale, screenHeight - 95 * scale, screenWidth / 2 + 150 * scale, screenHeight - 95 * scale, tocolor(255, 255, 255), 1 * scale, font, "left", "top")
+        dxDrawText(string.format("Mileage: %d km", mileage), screenWidth / 2 + 150 * scale, screenHeight - 185 * scale, screenWidth / 2 + 150 * scale, screenHeight - 185 * scale, tocolor(255, 255, 255), 1 * scale, font, "left", "top")
 
         -- Mini mapa na dole
-        drawMiniMap(screenWidth / 2 - 295 * scale, screenHeight - 80 * scale, 590 * scale, 60 * scale)
+        drawMiniMap(screenWidth / 2 - 295 * scale, screenHeight - 100 * scale, 590 * scale, 80 * scale)
     else
         drawStandardRadar()
     end
