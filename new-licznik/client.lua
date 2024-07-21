@@ -22,15 +22,15 @@ function drawSpeedometer()
 
         -- Poziom paliwa
         local fuel = getElementData(vehicle, "vehicle:fuel") or 0
-        dxDrawImage(screenWidth / 2 - 290 * scale, screenHeight - 190 * scale, 30 * scale, 30 * scale, "images/fuel_icon.png")
-        dxDrawText(string.format("Fuel: %.1f L", fuel), screenWidth / 2 - 255 * scale, screenHeight - 185 * scale, screenWidth / 2 - 255 * scale, screenHeight - 185 * scale, tocolor(255, 255, 255), 1 * scale, font, "left", "top")
+        dxDrawImage(screenWidth / 2 - 290 * scale, screenHeight - 250 * scale, 30 * scale, 30 * scale, "images/fuel_icon.png")
+        dxDrawText(string.format("Fuel: %.1f L", fuel), screenWidth / 2 - 255 * scale, screenHeight - 245 * scale, screenWidth / 2 - 255 * scale, screenHeight - 245 * scale, tocolor(255, 255, 255), 1 * scale, font, "left", "top")
 
         -- Przebieg pojazdu
         local mileage = getElementData(vehicle, "vehicle:mileage") or 0
-        dxDrawText(string.format("Mileage: %d km", mileage), screenWidth / 2 + 150 * scale, screenHeight - 185 * scale, screenWidth / 2 + 150 * scale, screenHeight - 185 * scale, tocolor(255, 255, 255), 1 * scale, font, "left", "top")
+        dxDrawText(string.format("Mileage: %d km", mileage), screenWidth / 2 + 150 * scale, screenHeight - 245 * scale, screenWidth / 2 + 150 * scale, screenHeight - 245 * scale, tocolor(255, 255, 255), 1 * scale, font, "left", "top")
 
         -- Mini mapa na dole
-        drawMiniMap(screenWidth / 2 - 295 * scale, screenHeight - 100 * scale, 590 * scale, 80 * scale)
+        drawMiniMap(screenWidth / 2 - 200 * scale, screenHeight - 100 * scale, 400 * scale, 80 * scale)
     else
         drawStandardRadar()
     end
@@ -38,15 +38,21 @@ end
 addEventHandler("onClientRender", root, drawSpeedometer)
 
 function drawMiniMap(x, y, width, height)
-    -- Rysowanie realistycznej mini mapy
-    local playerX, playerY, playerZ = getElementPosition(localPlayer)
-    local mapWidth, mapHeight = 6000, 6000 -- Zakładamy, że mapa ma rozmiar 6000x6000 jednostek
-    local mapScale = width / mapWidth
-    local mapX = x - (playerX * mapScale)
-    local mapY = y - (playerY * mapScale)
-    
-    dxDrawImage(mapX, mapY, mapWidth * mapScale, mapHeight * mapScale, mapImg)
-    dxDrawRectangle(x + (width / 2) - 5 * scale, y + (height / 2) - 5 * scale, 10 * scale, 10 * scale, tocolor(255, 0, 0, 255)) -- Pozycja gracza
+    local playerX, playerY = getElementPosition(localPlayer)
+    local centerX, centerY = 3000, 3000 -- Środek mapy San Andreas
+    local mapWidth, mapHeight = 6000, 6000 -- Rozmiar mapy San Andreas
+
+    local scale = width / mapWidth
+
+    -- Pozycja mapy
+    local mapX = x + (width / 2) - (playerX - centerX) * scale
+    local mapY = y + (height / 2) - (playerY - centerY) * scale
+
+    -- Rysowanie mapy
+    dxDrawImage(mapX, mapY, mapWidth * scale, mapHeight * scale, mapImg)
+
+    -- Znacznik gracza
+    dxDrawRectangle(x + (width / 2) - 5 * scale, y + (height / 2) - 5 * scale, 10 * scale, 10 * scale, tocolor(255, 0, 0, 255))
 end
 
 function drawStandardRadar()
