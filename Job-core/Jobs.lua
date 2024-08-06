@@ -1,4 +1,4 @@
--- jobs.lua
+
 local jobs = {
     ["Warehouse"] = {pln = 5, srp = 3}
 }
