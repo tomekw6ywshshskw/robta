@@ -1,4 +1,3 @@
--- job_requirements.lua
 local jobRequirements = {
     ["Warehouse"] = {srp = 0, category = nil}
 }
