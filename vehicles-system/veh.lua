@@ -1,18 +1,13 @@
 -- Tabela silników zawierająca ich parametry
 local engines = {
-    -- Silniki benzynowe
     ["benzyna_small"] = {hp = 100, nm = 150, capacity = 1.2, cylinders = 4, pistons = 4, camshafts = 1, type = "benzyna"},
     ["benzyna_medium"] = {hp = 200, nm = 300, capacity = 2.0, cylinders = 6, pistons = 6, camshafts = 2, type = "benzyna"},
     ["benzyna_large"] = {hp = 400, nm = 600, capacity = 3.5, cylinders = 8, pistons = 8, camshafts = 4, type = "benzyna"},
     ["benzyna_sport"] = {hp = 600, nm = 800, capacity = 4.0, cylinders = 10, pistons = 10, camshafts = 4, type = "benzyna"},
     ["benzyna_max"] = {hp = 1000, nm = 1200, capacity = 5.0, cylinders = 12, pistons = 12, camshafts = 4, type = "benzyna"},
-    
-    -- Silniki Diesla
     ["diesel_small"] = {hp = 90, nm = 200, capacity = 1.5, cylinders = 4, pistons = 4, camshafts = 1, type = "diesel"},
     ["diesel_1_9_tdi"] = {hp = 110, nm = 250, capacity = 1.9, cylinders = 4, pistons = 4, camshafts = 2, type = "diesel"},
     ["diesel_large"] = {hp = 300, nm = 500, capacity = 3.0, cylinders = 6, pistons = 6, camshafts = 3, type = "diesel"},
-    
-    -- Silniki elektryczne
     ["electric_standard"] = {hp = 150, nm = 400, capacity = 0.0, cylinders = 0, pistons = 0, camshafts = 0, type = "electric"},
     ["electric_performance"] = {hp = 300, nm = 700, capacity = 0.0, cylinders = 0, pistons = 0, camshafts = 0, type = "electric"},
 }
