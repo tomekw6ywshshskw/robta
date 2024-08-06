@@ -1,3 +1,17 @@
+local vehicles = {
+    { model = 400, name = "Landstalker", oilType = "10w40" },
+    { model = 401, name = "Bravura", oilType = "5w40" },
+}
+
+ function getVehicleOilType(model)
+    for _, vehicle in ipairs(vehicles) do
+        if vehicle.model == model then
+            return vehicle.oilType
+        end
+    end
+    return nil 
+end
+
 -- Tabela silników zawierająca ich parametry
 local engines = {
     ["benzyna_small"] = {hp = 100, nm = 150, capacity = 1.2, cylinders = 4, pistons = 4, camshafts = 1, type = "benzyna"},
